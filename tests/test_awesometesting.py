@@ -19,6 +19,7 @@ def test_post_count():
     # Asercja że lista ma 4 elementy
 
     # Zamknięcie przeglądarki
+    assert False
 
 
 def test_post_count_after_search():
@@ -39,6 +40,7 @@ def test_post_count_after_search():
     # Asercja że lista ma 3 elementy
 
     # Zamknięcie przeglądarki
+    assert False
 
 
 def test_post_count_on_cypress_label():
@@ -59,3 +61,4 @@ def test_post_count_on_cypress_label():
     # Asercja że lista ma 1 element
 
     # Zamknięcie przeglądarki
+    assert False

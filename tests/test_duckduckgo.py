@@ -21,4 +21,5 @@ def test_searching_in_duckduckgo():
     # Sprawdzenie że pierwszy wynik ma tytuł 'Vistula University in Warsaw'
 
     # Zamknięcie przeglądarki
+    assert False
 
