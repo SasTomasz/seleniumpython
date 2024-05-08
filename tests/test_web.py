@@ -52,3 +52,12 @@ def test_my_first_firefox_selenium_test():
     assert "TestArena" in firefox_driver.title
 
     firefox_driver.quit()
+
+
+def test_friday_tips():
+    service = Service(ChromeDriverManager().install())
+    browser = Chrome(service=service)
+    browser.get('https://www.ftfs.it/')
+    browser.set_window_size(1920, 1080)
+    assert 'Friday Tips for Seniors' in browser.title
+    browser.quit()
