@@ -16,6 +16,7 @@ def test_my_first_chrome_selenium_test():
 
     # Otwarcie strony testareny - pierwsze użycie Selenium API
     chrome_driver.get('http://demo.testarena.pl/zaloguj')
+    chrome_driver.maximize_window()
 
     # Weryfikacja czy tytuł otwartej strony zawiera w sobie 'TestArena'
     assert 'TestArena' in chrome_driver.title
@@ -34,6 +35,7 @@ def test_my_first_edge_selenium_test():
 
     # Otwarcie strony www.google.pl
     edge_driver.get('http://demo.testarena.pl/zaloguj')
+    edge_driver.maximize_window()
 
     assert "TestArena" in edge_driver.title
 
@@ -45,6 +47,7 @@ def test_my_first_firefox_selenium_test():
     firefox_driver = Firefox(service=service)
 
     firefox_driver.get('http://demo.testarena.pl/zaloguj')
+    firefox_driver.maximize_window()
 
     assert "TestArena" in firefox_driver.title
 
