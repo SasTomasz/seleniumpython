@@ -12,7 +12,7 @@ def test_searching_in_duckduckgo():
     chrome_driver = Chrome(service=service)
 
     chrome_driver.get("https://duckduckgo.com/")
-    chrome_driver.maximize_window()
+    chrome_driver.set_window_size(1920, 1080)
 
     search_field = chrome_driver.find_element(By.ID, "searchbox_input")
 
@@ -21,11 +21,11 @@ def test_searching_in_duckduckgo():
     assert search_field.is_displayed()
     assert search_button.is_displayed()
 
-    # Szukanie 4testers
+    # Searching 4testers in search engine
     search_field.send_keys("4testers")
     search_button.click()
 
-    # Sprawdzenie że pierwszy wynik ma poprawny tytuł
+    # Check there is a proper header in results
     expected_header_title = "4_testers Automaty - Kurs Tester Automatyzujący & AI"
     headers_in_search_results = chrome_driver.find_elements(By.CSS_SELECTOR, "[data-testid=result-title-a] span")
 
@@ -35,7 +35,6 @@ def test_searching_in_duckduckgo():
         titles.append(title.text)
     assert expected_header_title in titles
 
-    # Zamknięcie przeglądarki
     chrome_driver.quit()
 
 
@@ -44,17 +43,15 @@ def test_searching_in_bing():
     chrome_driver = Chrome(service=service)
 
     chrome_driver.get("https://bing.com/")
-    chrome_driver.maximize_window()
+    chrome_driver.set_window_size(1920, 1080)
 
     search_field = chrome_driver.find_element(By.CSS_SELECTOR, "#sb_form_q")
 
-    search_button = chrome_driver.find_element(By.CSS_SELECTOR, "#search_icon")
-
-    # Szukanie 4testers
+    # Searching 4testers in search engine
     search_field.send_keys("4testers", Keys.ENTER)
     # search_button.click()
 
-    # Sprawdzenie że pierwszy wynik ma poprawny tytuł
+    # Check there is a proper header in results
     expected_header_title = "4_testers Automaty – Kurs Tester Automatyzujący & AI"
     headers_in_search_results = chrome_driver.find_elements(By.CSS_SELECTOR, "h2 a")
     time.sleep(2)
@@ -66,6 +63,5 @@ def test_searching_in_bing():
 
     assert_that(titles).contains(expected_header_title)
 
-    # Zamknięcie przeglądarki
     chrome_driver.quit()
 
