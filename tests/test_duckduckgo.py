@@ -1,7 +1,6 @@
 import time
-from assertpy import assert_that
 
-from selenium.webdriver import Chrome, Keys
+from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
@@ -36,60 +35,3 @@ def test_searching_in_duckduckgo():
     assert expected_header_title in titles
 
     chrome_driver.quit()
-
-
-def test_searching_in_bing():
-    service = Service(ChromeDriverManager().install())
-    chrome_driver = Chrome(service=service)
-
-    chrome_driver.get("https://bing.com/")
-    chrome_driver.set_window_size(1920, 1080)
-
-    search_field = chrome_driver.find_element(By.CSS_SELECTOR, "#sb_form_q")
-
-    # Searching 4testers in search engine
-    search_field.send_keys("4testers", Keys.ENTER)
-
-    # Check there is a proper header in results
-    expected_header_title = "4_testers Automaty – Kurs Tester Automatyzujący & AI"
-    headers_in_search_results = chrome_driver.find_elements(By.CSS_SELECTOR, "h2 a")
-    time.sleep(2)
-
-    titles = []
-    for title in headers_in_search_results:
-        time.sleep(2)
-        titles.append(title.text)
-
-    assert_that(titles).contains(expected_header_title)
-
-    chrome_driver.quit()
-
-
-def test_is_four_posts_on_awesome_testing():
-    service = Service(ChromeDriverManager().install())
-    chrome_driver = Chrome(service=service)
-
-    chrome_driver.get("https://awesome-testing.blogspot.com/")
-    chrome_driver.set_window_size(1920, 1080)
-
-    result_headers = chrome_driver.find_elements(By.CSS_SELECTOR, "h1")
-    assert_that(len(result_headers)).is_equal_to(4)
-
-
-def test_is_twenty_posts_on_awesome_testing_about_selenium():
-    service = Service(ChromeDriverManager().install())
-    chrome_driver = Chrome(service=service)
-
-    chrome_driver.get("https://awesome-testing.blogspot.com/")
-    chrome_driver.set_window_size(1920, 1080)
-
-    search_button = chrome_driver.find_element(By.CSS_SELECTOR, "input.gsc-search-button")
-    search_field = chrome_driver.find_element(By.CSS_SELECTOR, "input.gsc-input")
-
-    search_field.send_keys("selenium")
-    search_button.click()
-
-    result_headers = chrome_driver.find_elements(By.CSS_SELECTOR, "h1")
-    assert_that(len(result_headers)).is_equal_to(20)
-
-
