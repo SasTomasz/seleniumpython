@@ -76,3 +76,20 @@ def test_is_four_posts_on_awesome_testing():
     assert_that(len(result_headers)).is_equal_to(4)
 
 
+def test_is_twenty_posts_on_awesome_testing_about_selenium():
+    service = Service(ChromeDriverManager().install())
+    chrome_driver = Chrome(service=service)
+
+    chrome_driver.get("https://awesome-testing.blogspot.com/")
+    chrome_driver.set_window_size(1920, 1080)
+
+    search_button = chrome_driver.find_element(By.CSS_SELECTOR, "input.gsc-search-button")
+    search_field = chrome_driver.find_element(By.CSS_SELECTOR, "input.gsc-input")
+
+    search_field.send_keys("selenium")
+    search_button.click()
+
+    result_headers = chrome_driver.find_elements(By.CSS_SELECTOR, "h1")
+    assert_that(len(result_headers)).is_equal_to(20)
+
+
