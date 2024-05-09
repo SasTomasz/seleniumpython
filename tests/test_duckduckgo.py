@@ -49,7 +49,6 @@ def test_searching_in_bing():
 
     # Searching 4testers in search engine
     search_field.send_keys("4testers", Keys.ENTER)
-    # search_button.click()
 
     # Check there is a proper header in results
     expected_header_title = "4_testers Automaty – Kurs Tester Automatyzujący & AI"
@@ -64,4 +63,16 @@ def test_searching_in_bing():
     assert_that(titles).contains(expected_header_title)
 
     chrome_driver.quit()
+
+
+def test_is_four_posts_on_awesome_testing():
+    service = Service(ChromeDriverManager().install())
+    chrome_driver = Chrome(service=service)
+
+    chrome_driver.get("https://awesome-testing.blogspot.com/")
+    chrome_driver.set_window_size(1920, 1080)
+
+    result_headers = chrome_driver.find_elements(By.CSS_SELECTOR, "h1")
+    assert_that(len(result_headers)).is_equal_to(4)
+
 
