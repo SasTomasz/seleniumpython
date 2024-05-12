@@ -1,39 +1,34 @@
-from selenium.webdriver import Chrome
 from selenium.webdriver import Edge
 from selenium.webdriver import Firefox
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.firefox.service import Service as FirefoxService
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
-from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
-# Test - uruchomienie Chroma
-def test_my_first_chrome_selenium_test():
-    # Uruchomienie przeglądarki Chrome. Ścieżka do chromedrivera
-    # ustawiana automatycznie przez bibliotekę webdriver-manager
-    service = Service(ChromeDriverManager().install())
-    chrome_driver = Chrome(service=service)
 
-    # Otwarcie strony testareny - pierwsze użycie Selenium API
+# Test - open Chrome browser
+def test_my_first_chrome_selenium_test(get_chrome_driver):
+    chrome_driver = get_chrome_driver
+
+    # Open testarena webpage - first use Selenium API
     chrome_driver.get('http://demo.testarena.pl/zaloguj')
     chrome_driver.maximize_window()
 
-    # Weryfikacja czy tytuł otwartej strony zawiera w sobie 'TestArena'
+    # Verification if title opened webpage contains 'TestArena'
     assert 'TestArena' in chrome_driver.title
 
-    # Zamknięcie przeglądarki
+    # Close web browser
     chrome_driver.quit()
 
 
-# Test - uruchomienie Edge
+# Test - open Edge browser
 def test_my_first_edge_selenium_test():
-    # Uruchomienie przeglądarki Edge. Ścieżka do geckodrivera (drivera dla Firefoxa)
-    # ustawiana automatycznie przez bibliotekę webdriver-manager
+    # Run Edge browser. Path to EdgeChromiumDriverManager(driver for Edge)
+    # set automatically by webdriver-mager library
     service = Service(EdgeChromiumDriverManager().install())
     edge_driver = Edge(service=service)
 
-
-    # Otwarcie strony www.google.pl
+    # Open www.google.pl webpage
     edge_driver.get('http://demo.testarena.pl/zaloguj')
     edge_driver.maximize_window()
 
@@ -54,10 +49,8 @@ def test_my_first_firefox_selenium_test():
     firefox_driver.quit()
 
 
-def test_friday_tips():
-    service = Service(ChromeDriverManager().install())
-    browser = Chrome(service=service)
+def test_friday_tips(get_chrome_driver):
+    browser = get_chrome_driver
     browser.get('https://www.ftfs.it/')
     browser.set_window_size(1920, 1080)
     assert 'Friday Tips for Seniors' in browser.title
-    browser.quit()

@@ -1,32 +1,20 @@
-import pytest
-import time
-
 from assertpy import assert_that
-from selenium.webdriver import Chrome
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
-def test_post_count():
-    service = Service(ChromeDriverManager().install())
-    chrome_driver = Chrome(service=service)
+def test_post_count(get_chrome_driver):
+    chrome_driver = get_chrome_driver
 
     chrome_driver.get("https://awesome-testing.blogspot.com/")
-    chrome_driver.set_window_size(1920, 1080)
 
     result_headers = chrome_driver.find_elements(By.CSS_SELECTOR, "h1")
     assert_that(len(result_headers)).is_equal_to(4)
 
 
-def test_post_count_after_search():
-    service = Service(ChromeDriverManager().install())
-    chrome_driver = Chrome(service=service)
+def test_post_count_after_search(get_chrome_driver):
+    chrome_driver = get_chrome_driver
 
     chrome_driver.get("https://awesome-testing.blogspot.com/")
-    chrome_driver.set_window_size(1920, 1080)
 
     search_button = chrome_driver.find_element(By.CSS_SELECTOR, "input.gsc-search-button")
     search_field = chrome_driver.find_element(By.CSS_SELECTOR, "input.gsc-input")
@@ -38,22 +26,18 @@ def test_post_count_after_search():
     assert_that(len(result_headers)).is_equal_to(20)
 
 
-def test_post_count_on_cypress_label():
-    # Uruchomienie przeglądarki Chrome. Ścieżka do chromedrivera
-    # ustawiana automatycznie przez bibliotekę webdriver-manager
-    browser = Chrome(executable_path=ChromeDriverManager().install())
+def test_post_count_on_cypress_label(get_chrome_driver):
+    browser = get_chrome_driver
 
-    # Otwarcie strony
+    # open page
 
-    # Inicjalizacja elementu z labelką
+    # find element with cypress label
 
-    # Kliknięcie na labelkę
+    # click to element
 
-    # Czekanie na stronę
+    # wait for page
 
-    # Pobranie listy tytułów
+    # get titles
 
-    # Asercja że lista ma 1 element
-
-    # Zamknięcie przeglądarki
+    # asser that list has at least one element
     assert False

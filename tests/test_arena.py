@@ -1,18 +1,13 @@
-from selenium.webdriver import Chrome
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
 
 
-# Test - uruchomienie Chroma
-def test_successful_login():
-    service = Service(ChromeDriverManager().install())
-    browser = Chrome(service=service)
+# Test - open chrome browser
+def test_successful_login(get_chrome_driver):
+    browser = get_chrome_driver
 
     administrator_email = "administrator@testarena.pl"
 
     browser.get('http://demo.testarena.pl/zaloguj')
-    browser.maximize_window()
 
     email_field = browser.find_element(By.CSS_SELECTOR, "#email")
     email_field.send_keys(administrator_email)
@@ -24,5 +19,3 @@ def test_successful_login():
     user_email = browser.find_element(By.CSS_SELECTOR, ".user-info small")
 
     assert administrator_email == user_email.text
-
-    browser.quit()

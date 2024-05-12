@@ -1,20 +1,13 @@
-import time
-
-from selenium.webdriver import Chrome
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support import expected_conditions as EC
 
 
-def test_searching_in_duckduckgo():
-    service = Service(ChromeDriverManager().install())
-    chrome_driver = Chrome(service=service)
+def test_searching_in_duckduckgo(get_chrome_driver):
+    chrome_driver = get_chrome_driver
     wait = WebDriverWait(chrome_driver, 10)
 
     chrome_driver.get("https://duckduckgo.com/")
-    chrome_driver.set_window_size(1920, 1080)
 
     search_field = chrome_driver.find_element(By.ID, "searchbox_input")
 
@@ -37,5 +30,3 @@ def test_searching_in_duckduckgo():
     for title in headers_in_search_results:
         titles.append(title.text)
     assert expected_header_title in titles
-
-    chrome_driver.quit()
