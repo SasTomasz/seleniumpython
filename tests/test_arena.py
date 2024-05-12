@@ -1,9 +1,12 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 # Test - open chrome browser
 def test_successful_login(get_chrome_driver):
     browser = get_chrome_driver
+    wait = WebDriverWait(browser, 10)
 
     administrator_email = "administrator@testarena.pl"
 
@@ -16,6 +19,8 @@ def test_successful_login(get_chrome_driver):
     button_login = browser.find_element(By.CSS_SELECTOR, "#login")
     button_login.click()
 
-    user_email = browser.find_element(By.CSS_SELECTOR, ".user-info small")
+    user_email_locator = (By.CSS_SELECTOR, ".user-info small")
+    wait.until(EC.visibility_of_element_located(user_email_locator))
+    user_email = browser.find_element(*user_email_locator)
 
     assert administrator_email == user_email.text
