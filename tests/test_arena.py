@@ -4,8 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 # Test - open chrome browser
-def test_successful_login(get_chrome_driver):
-    browser = get_chrome_driver
+def test_successful_login(browser):
     wait = WebDriverWait(browser, 10)
 
     administrator_email = "administrator@testarena.pl"

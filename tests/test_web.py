@@ -7,18 +7,16 @@ from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 
 # Test - open Chrome browser
-def test_my_first_chrome_selenium_test(get_chrome_driver):
-    chrome_driver = get_chrome_driver
-
+def test_my_first_chrome_selenium_test(browser):
     # Open testarena webpage - first use Selenium API
-    chrome_driver.get('http://demo.testarena.pl/zaloguj')
-    chrome_driver.maximize_window()
+    browser.get('http://demo.testarena.pl/zaloguj')
+    browser.maximize_window()
 
     # Verification if title opened webpage contains 'TestArena'
-    assert 'TestArena' in chrome_driver.title
+    assert 'TestArena' in browser.title
 
     # Close web browser
-    chrome_driver.quit()
+    browser.quit()
 
 
 # Test - open Edge browser
@@ -49,8 +47,6 @@ def test_my_first_firefox_selenium_test():
     firefox_driver.quit()
 
 
-def test_friday_tips(get_chrome_driver):
-    browser = get_chrome_driver
+def test_friday_tips(browser):
     browser.get('https://www.ftfs.it/')
-    browser.set_window_size(1920, 1080)
     assert 'Friday Tips for Seniors' in browser.title

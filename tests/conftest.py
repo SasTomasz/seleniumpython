@@ -5,7 +5,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 @pytest.fixture
-def get_chrome_driver():
+def browser():
     service = Service(ChromeDriverManager().install())
     chrome_driver = Chrome(service=service)
     chrome_driver.set_window_size(1920, 1080)
