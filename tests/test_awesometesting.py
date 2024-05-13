@@ -3,11 +3,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from pages.awesome_home import AwesomeHomePage
+
 
 def test_post_count(browser):
     wait = WebDriverWait(browser, 10)
+    awesome_home_page = AwesomeHomePage(browser)
 
-    browser.get("https://awesome-testing.blogspot.com/")
+    awesome_home_page.go_to_home_page()
 
     result_headers_locator = (By.CSS_SELECTOR, "h1")
     wait.until(EC.visibility_of_element_located(result_headers_locator))
