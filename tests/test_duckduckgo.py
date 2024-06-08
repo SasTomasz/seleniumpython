@@ -1,24 +1,31 @@
-from selenium.webdriver import Chrome
 from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
-def test_searching_in_duckduckgo():
-    # Uruchomienie przeglądarki Chrome. Ścieżka do chromedrivera
-    # ustawiana automatycznie przez bibliotekę webdriver-manager
-    browser = Chrome(executable_path=ChromeDriverManager().install())
+def test_searching_in_duckduckgo(browser):
+    wait = WebDriverWait(browser, 10)
 
-    # Otwarcie strony duckduckgo
+    browser.get("https://duckduckgo.com/")
 
-    # Znalezienie paska wyszukiwania
+    search_field = browser.find_element(By.ID, "searchbox_input")
 
-    # Znalezienie guzika wyszukiwania (lupki)
+    search_button = browser.find_element(By.CSS_SELECTOR, "button[aria-label=Search]")
 
-    # Asercje że elementy są widoczne dla użytkownika
+    assert search_field.is_displayed()
+    assert search_button.is_displayed()
 
-    # Szukanie Vistula University
+    # Searching 4testers in search engine
+    search_field.send_keys("4testers")
+    search_button.click()
 
-    # Sprawdzenie że pierwszy wynik ma tytuł 'Vistula University in Warsaw'
+    # Check there is a proper header in results
+    expected_header_title = "4_testers Automaty - Kurs Tester Automatyzujący & AI"
+    locator_headers_in_search_results = (By.CSS_SELECTOR, "[data-testid=result-title-a] span")
+    wait.until(EC.visibility_of_all_elements_located(locator_headers_in_search_results))
+    headers_in_search_results = browser.find_elements(*locator_headers_in_search_results)
 
-    # Zamknięcie przeglądarki
-
+    titles = []
+    for title in headers_in_search_results:
+        titles.append(title.text)
+    assert expected_header_title in titles

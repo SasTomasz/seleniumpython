@@ -1,61 +1,46 @@
-import pytest
-import time
-from selenium.webdriver import Chrome
+from assertpy import assert_that
 from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-
-def test_post_count():
-    # Uruchomienie przeglądarki Chrome. Ścieżka do chromedrivera
-    # ustawiana automatycznie przez bibliotekę webdriver-manager
-    browser = Chrome(executable_path=ChromeDriverManager().install())
-
-    # Otwarcie strony
-
-    # Pobranie listy tytułów
-
-    # Asercja że lista ma 4 elementy
-
-    # Zamknięcie przeglądarki
+from pages.awesome_home import AwesomeHomePage
 
 
-def test_post_count_after_search():
-    # Uruchomienie przeglądarki Chrome. Ścieżka do chromedrivera
-    # ustawiana automatycznie przez bibliotekę webdriver-manager
-    browser = Chrome(executable_path=ChromeDriverManager().install())
-
-    # Otwarcie strony
-
-    # Inicjalizacja searchbara i przycisku search
-
-    # Szukanie
-
-    # Czekanie na stronę
-
-    # Pobranie listy tytułów
-
-    # Asercja że lista ma 3 elementy
-
-    # Zamknięcie przeglądarki
+def test_post_count(browser):
+    awesome_home_page = AwesomeHomePage(browser)
+    awesome_home_page.go_to_home_page()
+    assert awesome_home_page.check_if_number_of_posts_are_correct(4)
 
 
-def test_post_count_on_cypress_label():
-    # Uruchomienie przeglądarki Chrome. Ścieżka do chromedrivera
-    # ustawiana automatycznie przez bibliotekę webdriver-manager
-    browser = Chrome(executable_path=ChromeDriverManager().install())
+def test_post_count_after_search(browser):
+    wait = WebDriverWait(browser, 10)
 
-    # Otwarcie strony
+    awesome_home_page = AwesomeHomePage(browser)
 
-    # Inicjalizacja elementu z labelką
+    awesome_home_page.go_to_home_page()
 
-    # Kliknięcie na labelkę
+    search_button = browser.find_element(By.CSS_SELECTOR, "input.gsc-search-button")
+    search_field = browser.find_element(By.CSS_SELECTOR, "input.gsc-input")
 
-    # Czekanie na stronę
+    search_field.send_keys("selenium")
+    search_button.click()
 
-    # Pobranie listy tytułów
+    result_headers_locator = (By.CSS_SELECTOR, "h1")
+    wait.until(EC.visibility_of_element_located(result_headers_locator))
+    result_headers = browser.find_elements(*result_headers_locator)
+    assert_that(len(result_headers)).is_equal_to(20)
 
-    # Asercja że lista ma 1 element
 
-    # Zamknięcie przeglądarki
+def test_post_count_on_cypress_label(browser):
+    # open page
+
+    # find element with cypress label
+
+    # click to element
+
+    # wait for page
+
+    # get titles
+
+    # asser that list has at least one element
+    assert False
